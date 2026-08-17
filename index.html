@@ -322,6 +322,202 @@
             overflow: visible;
         }
 
+        /* ========================================
+           EYE → FISH → MOUTH → EYE LOOP
+
+           The visible right eye opening doubles as the fish body.
+           A tail slowly grows out of it, the fish dives into the
+           mouth, disappears, then swims back in from the mask's
+           right edge and settles back into the eye opening.
+        ======================================== */
+
+        .fish-eye {
+            transform-box: view-box;
+            transform-origin: 214px 158px;
+            animation:
+                fishJourney
+                24s
+                ease-in-out
+                infinite;
+            will-change: transform, opacity;
+        }
+
+        .fish-eye-body {
+            fill: var(--paper);
+        }
+
+        .fish-tail-wrap {
+            transform-box: view-box;
+
+            /*
+               The reveal grows from a pivot point that sits well inside
+               the eye-shaped fish body. This prevents any visual seam
+               between body and tail while the tail appears/disappears.
+            */
+            transform-origin: 226px 159px;
+
+            animation:
+                fishTailReveal
+                24s
+                ease-in-out
+                infinite;
+        }
+
+        .fish-tail {
+            fill: var(--paper);
+
+            /*
+               Single-piece tail. Its root extends deep underneath the fish
+               body, and the body is rendered on top of it. The tail therefore
+               stays visually welded to the fish even while it flexes.
+            */
+            transform-box: view-box;
+            transform-origin: 226px 159px;
+
+            animation:
+                fishTailWiggle
+                0.9s
+                ease-in-out
+                infinite
+                alternate;
+
+            will-change: transform;
+        }
+
+        @keyframes fishJourney {
+
+            /* Resting eye opening */
+            0%,
+            17% {
+                opacity: 1;
+                transform:
+                    translate(0, 0)
+                    rotate(0deg)
+                    scale(1);
+            }
+
+            /* The eye has become a fish and starts moving */
+            23% {
+                opacity: 1;
+                transform:
+                    translate(0, 0)
+                    rotate(-3deg)
+                    scale(1);
+            }
+
+            /* Slow curved-feeling dive toward the mouth */
+            36% {
+                opacity: 1;
+                transform:
+                    translate(-24px, 38px)
+                    rotate(-28deg)
+                    scale(0.98);
+            }
+
+            49% {
+                opacity: 1;
+                transform:
+                    translate(-50px, 82px)
+                    rotate(-52deg)
+                    scale(0.90);
+            }
+
+            /* Fish reaches the mouth and vanishes into it */
+            55% {
+                opacity: 0;
+                transform:
+                    translate(-55px, 92px)
+                    rotate(-60deg)
+                    scale(0.18);
+            }
+
+            /* Quiet pause while the eye opening is gone */
+            66% {
+                opacity: 0;
+                transform:
+                    translate(64px, 0)
+                    rotate(0deg)
+                    scale(0.78);
+            }
+
+            /* Reappears from the mask's right side at eye height */
+            70% {
+                opacity: 1;
+                transform:
+                    translate(58px, 0)
+                    rotate(2deg)
+                    scale(0.82);
+            }
+
+            80% {
+                opacity: 1;
+                transform:
+                    translate(24px, -2px)
+                    rotate(-2deg)
+                    scale(0.92);
+            }
+
+            /* Settles back into the eye opening */
+            89%,
+            100% {
+                opacity: 1;
+                transform:
+                    translate(0, 0)
+                    rotate(0deg)
+                    scale(1);
+            }
+        }
+
+        @keyframes fishTailReveal {
+
+            /* No tail: reads as the original eye opening */
+            0%,
+            15% {
+                opacity: 0;
+                transform: scaleX(0);
+            }
+
+            /* Tail grows, turning the eye into a fish */
+            21%,
+            55% {
+                opacity: 1;
+                transform: scaleX(1);
+            }
+
+            /* Hidden together with the fish */
+            56%,
+            66% {
+                opacity: 0;
+                transform: scaleX(1);
+            }
+
+            /* Tail is visible when the fish swims back in */
+            70%,
+            86% {
+                opacity: 1;
+                transform: scaleX(1);
+            }
+
+            /* Tail retracts and the fish becomes the eye again */
+            93%,
+            100% {
+                opacity: 0;
+                transform: scaleX(0);
+            }
+        }
+
+        @keyframes fishTailWiggle {
+            from {
+                transform:
+                    rotate(-3deg);
+            }
+
+            to {
+                transform:
+                    rotate(4deg);
+            }
+        }
+
         @keyframes mysticFloat {
 
             0% {
@@ -726,8 +922,16 @@
 
             .wave-track,
             .wave-layer,
-            .mystic-form {
+            .mystic-form,
+            .fish-eye,
+            .fish-tail-wrap,
+            .fish-tail {
                 animation: none !important;
+            }
+
+            .fish-tail-wrap {
+                opacity: 0;
+                transform: scaleX(0);
             }
         }
 
@@ -938,27 +1142,85 @@
                 "
             />
 
-            <!-- Vain oikea silmäreikä näkyy -->
-            <path
-                fill="var(--paper)"
-                d="
-                    M183 151
+            <!--
+                Oikea silmäreikä toimii animaation kalan vartalona.
+                Kun pyrstö on piilossa, muoto näyttää täsmälleen
+                tavalliselta silmäaukolta.
+            -->
+            <g class="fish-eye">
 
-                    C202 140
-                     226 140
-                     244 150
+                <!--
+                    Yksiosainen pyrstö piirretään ensin rungon ALLE.
+                    Pyrstön tyvi ulottuu syvälle rungon sisään, joten
+                    mustaa rakoa ei voi syntyä rungon ja pyrstön väliin
+                    edes pyrstön liikkuessa.
+                -->
+                <g class="fish-tail-wrap">
+                    <path
+                        class="fish-tail"
+                        d="
+                            M216 146
 
-                    C235 170
-                     213 179
-                     192 172
+                            C232 145
+                             246 149
+                             256 156
 
-                    C185 169
-                     181 161
-                     183 151
+                            C266 149
+                             278 145
+                             290 147
 
-                    Z
-                "
-            />
+                            C284 153
+                             279 158
+                             279 161
+
+                            C281 166
+                             286 171
+                             292 177
+
+                            C279 175
+                             267 170
+                             256 164
+
+                            C246 171
+                             232 174
+                             216 171
+
+                            C224 165
+                             224 153
+                             216 146
+
+                            Z
+                        "
+                    />
+                </g>
+
+                <!--
+                    Eye-shaped fish body is rendered on top of the tail root.
+                    This masks the hinge completely and keeps the silhouette
+                    continuous, like a single fish figure.
+                -->
+                <path
+                    class="fish-eye-body"
+                    d="
+                        M183 151
+
+                        C202 140
+                         226 140
+                         244 150
+
+                        C235 170
+                         213 179
+                         192 172
+
+                        C185 169
+                         181 161
+                         183 151
+
+                        Z
+                    "
+                />
+
+            </g>
 
             <!-- Suuaukko -->
             <ellipse
