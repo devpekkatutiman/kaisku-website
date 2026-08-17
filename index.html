@@ -388,7 +388,7 @@
 
             /* Resting eye opening */
             0%,
-            18% {
+            20% {
                 opacity: 1;
                 transform:
                     translate(0, 0)
@@ -396,7 +396,7 @@
                     scale(1);
             }
 
-            /* The eye becomes a fish and gets ready to move */
+            /* Tail is now fully formed: fish gets ready to move */
             22% {
                 opacity: 1;
                 transform:
@@ -470,43 +470,61 @@
 
         @keyframes fishTailReveal {
 
-            /* Original eye opening: no tail visible */
+            /* Original eye opening: tail completely hidden */
             0%,
-            18% {
+            18.4% {
                 opacity: 0;
-                transform: scaleX(0);
+                transform:
+                    translateX(-3px)
+                    scaleX(0.06)
+                    scaleY(0.72);
             }
 
-            /* Tail appears at full opacity and unfolds from inside the body */
-            18.01% {
+            /* Switch on while still buried under the eye body */
+            18.41% {
                 opacity: 1;
-                transform: scaleX(0);
+                transform:
+                    translateX(-3px)
+                    scaleX(0.06)
+                    scaleY(0.72);
             }
 
-            22%,
+            /* Fast organic unfold: about 0.28 s in a 20 s loop */
+            19.8% {
+                opacity: 1;
+                transform:
+                    translateX(0)
+                    scaleX(1.06)
+                    scaleY(0.96);
+            }
+
+            /* Settle seamlessly into the finished fish silhouette */
+            20.4%,
             42% {
                 opacity: 1;
-                transform: scaleX(1);
+                transform:
+                    translateX(0)
+                    scaleX(1)
+                    scaleY(1);
             }
 
-            /*
-               Retract the tail cleanly back into the body BEFORE
-               the fish itself disappears into the mouth.
-            */
+            /* Retract fully before the fish disappears into the mouth */
             47% {
                 opacity: 1;
-                transform: scaleX(0);
+                transform:
+                    translateX(-3px)
+                    scaleX(0.06)
+                    scaleY(0.72);
             }
 
-            /*
-               Tail is now fully gone and remains gone for the entire
-               return journey. The shape coming back from the right edge
-               is therefore only the original eye opening.
-            */
+            /* Tail stays completely gone during the return journey */
             47.01%,
             100% {
                 opacity: 0;
-                transform: scaleX(0);
+                transform:
+                    translateX(-3px)
+                    scaleX(0.06)
+                    scaleY(0.72);
             }
         }
 
