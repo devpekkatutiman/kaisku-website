@@ -336,7 +336,7 @@
             transform-origin: 214px 158px;
             animation:
                 fishJourney
-                24s
+                20s
                 ease-in-out
                 infinite;
             will-change: transform, opacity;
@@ -358,7 +358,7 @@
 
             animation:
                 fishTailReveal
-                24s
+                20s
                 ease-in-out
                 infinite;
         }
@@ -376,7 +376,7 @@
 
             animation:
                 fishTailWiggle
-                0.9s
+                0.75s
                 ease-in-out
                 infinite
                 alternate;
@@ -388,7 +388,7 @@
 
             /* Resting eye opening */
             0%,
-            17% {
+            18% {
                 opacity: 1;
                 transform:
                     translate(0, 0)
@@ -396,69 +396,69 @@
                     scale(1);
             }
 
-            /* The eye has become a fish and starts moving */
-            23% {
+            /* The eye becomes a fish and gets ready to move */
+            22% {
                 opacity: 1;
                 transform:
                     translate(0, 0)
-                    rotate(-3deg)
+                    rotate(-4deg)
                     scale(1);
             }
 
-            /* Slow curved-feeling dive toward the mouth */
-            36% {
+            /* Smooth dive toward the mouth */
+            32% {
                 opacity: 1;
                 transform:
-                    translate(-24px, 38px)
-                    rotate(-28deg)
+                    translate(-18px, 28px)
+                    rotate(-22deg)
                     scale(0.98);
             }
 
-            49% {
+            42% {
                 opacity: 1;
                 transform:
-                    translate(-50px, 82px)
-                    rotate(-52deg)
-                    scale(0.90);
+                    translate(-42px, 68px)
+                    rotate(-46deg)
+                    scale(0.92);
             }
 
-            /* Fish reaches the mouth and vanishes into it */
-            55% {
+            /* Fish reaches the mouth and vanishes */
+            48% {
                 opacity: 0;
                 transform:
-                    translate(-55px, 92px)
-                    rotate(-60deg)
-                    scale(0.18);
+                    translate(-54px, 88px)
+                    rotate(-58deg)
+                    scale(0.16);
             }
 
-            /* Quiet pause while the eye opening is gone */
-            66% {
+            /* Quiet pause while the opening is absent */
+            60% {
                 opacity: 0;
                 transform:
-                    translate(64px, 0)
+                    translate(60px, -2px)
                     rotate(0deg)
                     scale(0.78);
             }
 
-            /* Reappears from the mask's right side at eye height */
-            70% {
+            /* Reappears from the mask's right side */
+            64% {
                 opacity: 1;
                 transform:
-                    translate(58px, 0)
+                    translate(54px, -1px)
                     rotate(2deg)
-                    scale(0.82);
+                    scale(0.84);
             }
 
-            80% {
+            74% {
                 opacity: 1;
                 transform:
-                    translate(24px, -2px)
+                    translate(20px, -2px)
                     rotate(-2deg)
-                    scale(0.92);
+                    scale(0.94);
             }
 
             /* Settles back into the eye opening */
-            89%,
+            84%,
             100% {
                 opacity: 1;
                 transform:
@@ -470,36 +470,40 @@
 
         @keyframes fishTailReveal {
 
-            /* No tail: reads as the original eye opening */
+            /* Original eye opening: no tail visible */
             0%,
-            15% {
+            18% {
                 opacity: 0;
                 transform: scaleX(0);
             }
 
-            /* Tail grows, turning the eye into a fish */
-            21%,
-            55% {
+            /* Tail appears at full opacity and unfolds from inside the body */
+            18.01% {
+                opacity: 1;
+                transform: scaleX(0);
+            }
+
+            22%,
+            42% {
                 opacity: 1;
                 transform: scaleX(1);
             }
 
-            /* Hidden together with the fish */
-            56%,
-            66% {
-                opacity: 0;
-                transform: scaleX(1);
-            }
-
-            /* Tail is visible when the fish swims back in */
-            70%,
-            86% {
+            /*
+               Retract the tail cleanly back into the body BEFORE
+               the fish itself disappears into the mouth.
+            */
+            47% {
                 opacity: 1;
-                transform: scaleX(1);
+                transform: scaleX(0);
             }
 
-            /* Tail retracts and the fish becomes the eye again */
-            93%,
+            /*
+               Tail is now fully gone and remains gone for the entire
+               return journey. The shape coming back from the right edge
+               is therefore only the original eye opening.
+            */
+            47.01%,
             100% {
                 opacity: 0;
                 transform: scaleX(0);
